@@ -1,2 +1,4 @@
-# Exam-Quiz
-Quiz website made for school exam
+# Exam-Hire
+Website made for school exam
+
+Create a website called ___
