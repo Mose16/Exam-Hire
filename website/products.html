@@ -1,12 +1,16 @@
 <!DOCTYPE.html>
 <html>
 	%include('Shared/header.html')
+	<head>
+		<link href="/css/products.css" rel="stylesheet" type="text/css">
+		<link href="/script/products.js">
+	</head>
 	<body>
 		<div class="grid">
 			<div id="top"> 
 				<p>Rent a Bro</p> 
 				<div class="dropdown">
-					<i class="material-icons" style="font-size: 40px; color:black;">view_module</i>
+					<i class="material-icons" style="font-size: 40px;">view_module</i>
 					<div class="dropdown-content">
 						<a href="poo poo"><div><p>Meet The Bros</p></div></a>
 						<a href=""><div><p>Write A Review</p></div></a>
@@ -15,22 +19,67 @@
 				</div>
 			</div>
 			<div id="center" style="position:relative;"> 
-				<div>
-					<img src="/img/cover2.jpg" width="100%" >
-					<div id="overlay">
-						<p>Select from a range of bros </br> <span style="font-size:25px;">Each one carefuly hired for amzing small talk ability and unique personalities. </span> </p>
+				%for bro in bros_list:
+				<div class="card" id="a{{bro.index}}">
+					<h1>{{bro.name}}</h1>
+					<div>
+						<img src="/img/{{bro.img}}" height="100%"/>
 					</div>
+					<article>
+						<p>{{bro.description}}</p>
+						<div>
+							<button onclick="prev()" style="float:left;" id="prev">Previous</button>
+							<button>Yes! I want this one</button>
+							<button onclick="next()" style="float:right;" id="next">Next</button>
+						</div>
+					</article>
 				</div>
-				<div class="text">
-					<h1>Hire A Bro. For Anything!</h1>
-					<p> Our range of bros have a diverse set of peronalities, hobbies and energy. Each bro has been trained methodicaly and have gained the ability 
-					to act as required; Giving you, the broless one, the ability to fine tune your purchase. </br> Our prices are thought through carefuly and decided according to each
-					bro's performance rating. As well as input from their permanent and longer lasting buddies.</p>
-				</div>
-			</div>
+				%end
 			<div id="bottom">
 				<p style="display:inline">Dont be dissapointed when you see the products.  |</p> <address style="display:inline">admin@rentabro.co.nz</address>
 			</div>
 		</div>
 	</body>
+	
+	<script>
+		var cards = []
+		var current_card = 1;
+		var x = document.querySelectorAll('.card').length;
+
+		for (i = 0; i < (x + 1); i++) {
+			cards.push(document.getElementById("a" + i.toString()))
+		}
+		
+		for (i = 2; i < cards.length; i++) {
+			document.getElementById("a" + i.toString()).style.display = "none";
+		}
+		document.getElementById("prev").style.opacity = "0.5";
+		document.getElementById("next").style.opacity = "1";
+
+		function next() {
+			if (current_card < (cards.length - 1)) {
+				document.getElementById("a" + current_card.toString()).style.display = "none";
+				current_card++;
+				document.getElementById("a" + current_card.toString()).style.display = "block";
+				if (current_card > (cards.length - 2)) {
+					console.log(" next true");
+					console.log(current_card);
+					document.getElementById("next").style.opacity = "0.5";
+					document.getElementById("prev").style.opacity = "1";
+				}
+			}
+		}
+		function prev() {
+			if (current_card > 1) {
+				document.getElementById("a" + current_card.toString()).style.display = "none";
+				current_card--;
+				document.getElementById("a" + current_card.toString()).style.display = "block";
+				if (current_card < 2) {
+					console.log(" prev true");
+					document.getElementById("prev").style.opacity = "0.5";
+					document.getElementById("next").style.opacity = "1";
+				}
+			}
+		}
+	</script>
 </html>

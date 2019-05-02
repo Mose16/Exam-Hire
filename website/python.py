@@ -1,5 +1,16 @@
 from bottle import run, route, view, get, post, request, template, static_file
-from itertools import count
+
+class Bro:
+    def __init__(self, name, description, img, num):
+        self.index = num
+        self.name = name
+        self.description = description
+        self.img = img
+        
+bros = [
+    Bro("Jerry","Bla bla bla","jerry.jpg","1"),
+    Bro("Moses","Ble ble ble","jerry.jpg","2")
+]
 
 
 
@@ -14,7 +25,7 @@ def index():
 @route('/products.html')
 @view('products.html')
 def products():
-    pass
+    return dict(bros_list = bros)
 
 
 
