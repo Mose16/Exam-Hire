@@ -29,41 +29,44 @@
 			<div id="bottom">
 				<p style="display:inline">Dont be dissapointed when you see the products.  |</p> <address style="display:inline">admin@rentabro.co.nz</address>
 			</div>
+			<div id="fill" style="width:100vw; height:0;">
+			</div>
 		</div>
 	</body>
 	
 	<script>
 		var divs = document.querySelectorAll('#center div');
 		console.log(divs.length);
+		var speed = 2;
 		var prev_scroll = 0
+		var fill = document.getElementById("fill");
 		
-		var y = 0
 		for (i = 0; i < divs.length; i++) {
-			divs[i].style.marginTop = y;
-			y += 800;
+			divs[i].style.marginTop = 0;
 		};
-		
+
 		window.addEventListener('scroll', function() {
 			for (i = 0; i < divs.length; i++) {
 				//animationY(divs[i].id);
 				animationY(divs[1].id);
+				animationX(divs[2].id);
 			};
 		});
 		
 		function animationY(id) {
-			console.log(id);
-			var elmnt = document.getElementById(id);
-			console.log(prev_scroll, pageYOffset);
-			if (pageYOffset > prev_scroll) {
-				prev_scroll = pageYOffset;
-				elmnt.style.marginTop = parseInt(elmnt.style.marginTop) - 5;
-			} else if  (pageYOffset < prev_scroll){
-				prev_scroll = pageYOffset;
-				elmnt.style.marginTop = parseInt(elmnt.style.marginTop) + 5;
+			var rect = document.getElementById("bottom").getBoundingClientRect();
+			if (pageYOffset <= (document.body.offsetHeight + parseInt(fill.style.height) - window.innerHeight)) {
+				console.log(id);
+				var elmnt = document.getElementById(id);
+				elmnt.style.marginTop = -(pageYOffset * speed);
+				fill.style.height = (pageYOffset * speed);
+				console.log(pageYOffset, document.body.offsetHeight, parseInt(fill.style.height), (document.body.offsetHeight + fill.style.height - window.innerHeight))
+			} else {
+				console.log(pageYOffset, document.body.offsetHeight, parseInt(fill.style.height), (document.body.offsetHeight + fill.style.height - window.innerHeight))
 			}
-			console.log(prev_scroll, pageYOffset);
-			
-			
+		};
+		function animationX(id) {
+	
 		};
 	</script>
 </html>
