@@ -4,6 +4,7 @@
 	<head>
 		<link href="/css/products.css" rel="stylesheet" type="text/css">
 		<link href="/script/products.js">
+		<script src="jquery-3.3.1.min.js"></script>
 	</head>
 	<body>
 		<div class="grid">
@@ -18,23 +19,13 @@
 					</div>
 				</div>
 			</div>
-			<div id="center" style="position:relative;"> 
+			<div id="center"> 
 				%for bro in bros_list:
-				<div class="card" id="a{{bro.index}}">
-					<h1>{{bro.name}}</h1>
-					<div>
-						<img src="/img/{{bro.img}}" height="100%"/>
+					<div id="{{bro.name}}">
+						<h1>{{bro.name}}</h1>
 					</div>
-					<article>
-						<p>{{bro.description}}</p>
-						<div>
-							<button onclick="prev()" style="float:left;" id="prev">Previous</button>
-							<button>Yes! I want this one</button>
-							<button onclick="next()" style="float:right;" id="next">Next</button>
-						</div>
-					</article>
-				</div>
 				%end
+			</div>
 			<div id="bottom">
 				<p style="display:inline">Dont be dissapointed when you see the products.  |</p> <address style="display:inline">admin@rentabro.co.nz</address>
 			</div>
@@ -42,44 +33,37 @@
 	</body>
 	
 	<script>
-		var cards = []
-		var current_card = 1;
-		var x = document.querySelectorAll('.card').length;
-
-		for (i = 0; i < (x + 1); i++) {
-			cards.push(document.getElementById("a" + i.toString()))
-		}
+		var divs = document.querySelectorAll('#center div');
+		console.log(divs.length);
+		var prev_scroll = 0
 		
-		for (i = 2; i < cards.length; i++) {
-			document.getElementById("a" + i.toString()).style.display = "none";
-		}
-		document.getElementById("prev").style.opacity = "0.5";
-		document.getElementById("next").style.opacity = "1";
-
-		function next() {
-			if (current_card < (cards.length - 1)) {
-				document.getElementById("a" + current_card.toString()).style.display = "none";
-				current_card++;
-				document.getElementById("a" + current_card.toString()).style.display = "block";
-				if (current_card > (cards.length - 2)) {
-					console.log(" next true");
-					console.log(current_card);
-					document.getElementById("next").style.opacity = "0.5";
-					document.getElementById("prev").style.opacity = "1";
-				}
+		var y = 0
+		for (i = 0; i < divs.length; i++) {
+			divs[i].style.marginTop = y;
+			y += 800;
+		};
+		
+		window.addEventListener('scroll', function() {
+			for (i = 0; i < divs.length; i++) {
+				//animationY(divs[i].id);
+				animationY(divs[1].id);
+			};
+		});
+		
+		function animationY(id) {
+			console.log(id);
+			var elmnt = document.getElementById(id);
+			console.log(prev_scroll, pageYOffset);
+			if (pageYOffset > prev_scroll) {
+				prev_scroll = pageYOffset;
+				elmnt.style.marginTop = parseInt(elmnt.style.marginTop) - 5;
+			} else if  (pageYOffset < prev_scroll){
+				prev_scroll = pageYOffset;
+				elmnt.style.marginTop = parseInt(elmnt.style.marginTop) + 5;
 			}
-		}
-		function prev() {
-			if (current_card > 1) {
-				document.getElementById("a" + current_card.toString()).style.display = "none";
-				current_card--;
-				document.getElementById("a" + current_card.toString()).style.display = "block";
-				if (current_card < 2) {
-					console.log(" prev true");
-					document.getElementById("prev").style.opacity = "0.5";
-					document.getElementById("next").style.opacity = "1";
-				}
-			}
-		}
+			console.log(prev_scroll, pageYOffset);
+			
+			
+		};
 	</script>
 </html>
