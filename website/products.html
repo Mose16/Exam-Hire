@@ -21,7 +21,7 @@
 			</div>
 			<div id="center"> 
 				%for bro in bros_list:
-					<div id="{{bro.name}}">
+					<div id="{{bro.name}}" style="margin-top: 0; margin-left: 0;">
 						<h1>{{bro.name}}</h1>
 					</div>
 				%end
@@ -37,36 +37,57 @@
 	<script>
 		var divs = document.querySelectorAll('#center div');
 		console.log(divs.length);
-		var speed = 2;
-		var prev_scroll = 0
+		var speed = 1.5;
 		var fill = document.getElementById("fill");
-		
-		for (i = 0; i < divs.length; i++) {
-			divs[i].style.marginTop = 0;
-		};
 
 		window.addEventListener('scroll', function() {
-			for (i = 0; i < divs.length; i++) {
-				//animationY(divs[i].id);
-				animationY(divs[1].id);
-				animationX(divs[2].id);
-			};
+			if (pageYOffset < (document.body.offsetHeight - parseInt(fill.style.height) - window.innerHeight)) {
+				console.log((document.body.offsetHeight - parseInt(fill.style.height) - window.innerHeight));
+				for (i = 0; i < divs.length; i++) {
+					//animationY(divs[i].id);
+					animationY(divs[1].id);
+					//animationPX(divs[2].id);
+				};
+			} else {
+				document.body.scrollTop = (document.body.offsetHeight - parseInt(fill.style.height) - window.innerHeight)
+				console.log((document.body.offsetHeight - parseInt(fill.style.height) - window.innerHeight));
+			}
 		});
 		
+		//Move up
 		function animationY(id) {
-			var rect = document.getElementById("bottom").getBoundingClientRect();
-			if (pageYOffset <= (document.body.offsetHeight + parseInt(fill.style.height) - window.innerHeight)) {
-				console.log(id);
-				var elmnt = document.getElementById(id);
-				elmnt.style.marginTop = -(pageYOffset * speed);
-				fill.style.height = (pageYOffset * speed);
-				console.log(pageYOffset, document.body.offsetHeight, parseInt(fill.style.height), (document.body.offsetHeight + fill.style.height - window.innerHeight))
-			} else {
-				console.log(pageYOffset, document.body.offsetHeight, parseInt(fill.style.height), (document.body.offsetHeight + fill.style.height - window.innerHeight))
-			}
+			var elmnt = document.getElementById(id);
+			elmnt.style.marginTop = -(pageYOffset * speed);
+			fill.style.height = (pageYOffset * speed);
 		};
-		function animationX(id) {
-	
+		
+		//Move right
+		function animationPX(id) {
+			console.log(id);
+			var elmnt = document.getElementById(id);
+			
+			var check = isInViewport(elmnt);
+			if (check[0] && parseInt(elmnt.style.marginLeft) < 450) {
+				elmnt.style.marginLeft = (pageYOffset - check[1]);
+			};
+		};
+		
+		//Check if element is visible
+		var found = true;
+		var position = 0;
+		var isInViewport = function (el) {
+			var bool = false;
+			var box = el.getBoundingClientRect();
+			if (box.top <= (pageYOffset + window.innerHeight)) {
+				if (found) {
+					found = false;
+					position = pageYOffset;
+					console.log("yeop");
+				}
+				bool = true;
+			};
+			console.log(box.top, bool);
+			return ([bool, position])
 		};
 	</script>
 </html>

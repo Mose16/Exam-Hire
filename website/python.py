@@ -10,7 +10,8 @@ class Bro:
 bros = [
     Bro("Jerry","Bla bla bla","jerry.jpg","1"),
     Bro("Moses","Ble ble ble","jerry.jpg","2"),
-    Bro("Tom","Ble ble ble","jerry.jpg","2")
+    Bro("Tom","Ble ble ble","jerry.jpg","2"),
+    Bro("Dom","Ble ble ble","jerry.jpg","2")
 ]
 
 
