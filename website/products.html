@@ -22,7 +22,13 @@
 			<div id="center"> 
 				%for bro in bros_list:
 					<div id="{{bro.name}}" style="margin-top: 0; margin-left: 0;">
-						<h1>{{bro.name}}</h1>
+						<img src="/img/{{bro.img}}" height="100%;" style="display:inline-block;"/>
+						<div class="text">
+							<h1 style="float:top;">{{bro.name}}</h1>
+							<p style="float:top; margin-left:20px; margin-top:100px;">{{bro.description}}</p>
+							<div class="controls">
+							</div>
+						</div>
 					</div>
 				%end
 			</div>
@@ -33,61 +39,4 @@
 			</div>
 		</div>
 	</body>
-	
-	<script>
-		var divs = document.querySelectorAll('#center div');
-		console.log(divs.length);
-		var speed = 1.5;
-		var fill = document.getElementById("fill");
-
-		window.addEventListener('scroll', function() {
-			if (pageYOffset < (document.body.offsetHeight - parseInt(fill.style.height) - window.innerHeight)) {
-				console.log((document.body.offsetHeight - parseInt(fill.style.height) - window.innerHeight));
-				for (i = 0; i < divs.length; i++) {
-					//animationY(divs[i].id);
-					animationY(divs[1].id);
-					//animationPX(divs[2].id);
-				};
-			} else {
-				document.body.scrollTop = (document.body.offsetHeight - parseInt(fill.style.height) - window.innerHeight)
-				console.log((document.body.offsetHeight - parseInt(fill.style.height) - window.innerHeight));
-			}
-		});
-		
-		//Move up
-		function animationY(id) {
-			var elmnt = document.getElementById(id);
-			elmnt.style.marginTop = -(pageYOffset * speed);
-			fill.style.height = (pageYOffset * speed);
-		};
-		
-		//Move right
-		function animationPX(id) {
-			console.log(id);
-			var elmnt = document.getElementById(id);
-			
-			var check = isInViewport(elmnt);
-			if (check[0] && parseInt(elmnt.style.marginLeft) < 450) {
-				elmnt.style.marginLeft = (pageYOffset - check[1]);
-			};
-		};
-		
-		//Check if element is visible
-		var found = true;
-		var position = 0;
-		var isInViewport = function (el) {
-			var bool = false;
-			var box = el.getBoundingClientRect();
-			if (box.top <= (pageYOffset + window.innerHeight)) {
-				if (found) {
-					found = false;
-					position = pageYOffset;
-					console.log("yeop");
-				}
-				bool = true;
-			};
-			console.log(box.top, bool);
-			return ([bool, position])
-		};
-	</script>
 </html>
