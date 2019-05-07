@@ -6,11 +6,12 @@ class Bro:
         self.name = name
         self.description = description
         self.img = img
-        
+       
 bros = [
+    Bro("Tom","Ble ble ble","tom.jpg","2"),
     Bro("Jerry","Bla bla bla","jerry.jpg","1"),
     Bro("Moses","Ble ble ble","jerry.jpg","2"),
-    Bro("Tom","Ble ble ble","jerry.jpg","2"),
+    Bro("John","Ble ble ble","john.jpg","2"),
     Bro("Dom","Ble ble ble","jerry.jpg","2")
 ]
 

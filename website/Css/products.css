@@ -4,8 +4,7 @@
 
 #center > div {
 	position:relative;
-	padding:20px;
-	width:calc(100% - 40px);
+	width:100%;
 	height:800px;
 	
 	display:grid;
@@ -16,21 +15,24 @@
 	"left right";
 }
 
-#center div img {
+.img {
 	grid-area: left;
+	width:582px;
+	overflow:hidden;
 }
-
-.text {
+.right {
 	grid-area: right;
-	float:right;
 	height:100%;
-	width:100%
+	width:100%;
+}
+.text {
+	height:calc(100% - 50px);
+	width:100%;
 }
 
 .controls {
 	width:100%;
-	height:20px;
-	background-color:red;
+	height:50px;
 }
 
 #center > div:nth-child(odd) {
@@ -39,5 +41,13 @@
 
 #center > div:nth-child(even) {
 	background-color:rgb(200,200,200);
+}
+
+#center > div:nth-child(odd) .controls{
+	border-top:2px solid rgb(200,200,200);
+}
+
+#center > div:nth-child(even) .controls{
+	border-top:2px solid white;
 }
 
