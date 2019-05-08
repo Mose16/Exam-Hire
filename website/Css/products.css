@@ -26,13 +26,27 @@
 	width:100%;
 }
 .text {
-	height:calc(100% - 50px);
+	padding:10px;
+	padding-right:50px;
+	height:calc(100% - 80px);
 	width:100%;
 }
 
 .controls {
 	width:100%;
-	height:50px;
+	height:70px;
+	text-align:center;
+}
+
+.controls h1{
+	text-align:center;
+	font: bold 50px arial, sans-serif;
+	background-color: #565656;
+	color: transparent;
+	text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+	-webkit-background-clip: text;
+	   -moz-background-clip: text;
+            background-clip: text;
 }
 
 #center > div:nth-child(odd) {
@@ -44,10 +58,9 @@
 }
 
 #center > div:nth-child(odd) .controls{
-	border-top:2px solid rgb(200,200,200);
 }
 
-#center > div:nth-child(even) .controls{
-	border-top:2px solid white;
+#center > div:nth-child(even) .controls h1{
+	background-color: rgb(100,100,100);
 }
 
