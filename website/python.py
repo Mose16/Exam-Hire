@@ -1,11 +1,13 @@
 from bottle import run, route, view, get, post, request, template, static_file
+from datetime import *
 
 class Bro:
-    def __init__(self, name, description, img, stock):
+    def __init__(self, name, description, img, stock, booked_details=""):
         self.name = name
         self.description = description
         self.img = img
         self.stock = stock
+        booked_details = booked_details
        
 bros = [
     Bro("Tom","Generic british boi. Nice and smart so don't hire him if you don't want to feel bad about your IQ.","tom.jpg", True),
@@ -18,6 +20,7 @@ bros = [
 ]
 
 
+current_bro = None
 
 ###Pages###
 #Index page
@@ -32,7 +35,32 @@ def index():
 def products():
     return dict(bros_list = bros)
 
+#Purchase page
+@route('/purchase/<name>')
+@view('purchase')
+def purchase(name):
+    global current_bro
+    found_bro = None
+    for bro in bros:
+        if bro.name == name:
+            found_bro = bro
+            break
+    found_bro.stock = False
+    current_bro = found_bro
+    return dict(bro = found_bro)
 
+#Purchase_success page
+@route('/purchase_success', method = "POST")
+@view('purchase_success')
+def purchase_success():
+    Fname = request.forms.get("first_name")
+    Lname = request.forms.get("last_name")
+    date = request.forms.get("date")
+    
+    curr_date = datetime.now()
+    current_bro.booked_details = [Fname, Lname, str(curr_date.month) + " " + str(curr_date.day) + ", " + str(curr_date.year), date]
+    return dict(bro = current_bro)
+    
 
 ##Static files###
 #Images
