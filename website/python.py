@@ -86,13 +86,13 @@ def purchase_success():
     current_bro.booked_details = [Fname, Lname, str(curr_date.strftime("%B")) + " " + str(curr_date.day) + ", " + str(curr_date.year), date_, total_cost]
     return dict(bro = current_bro)
 
-#Purchase page
+#Application page
 @route('/application.html')
 @view('application.html')
 def application():
     pass
 
-#Purchase_success page
+#Application success page
 @route('/application_success', method = "POST")
 @view('application_success')
 def application_success():
@@ -103,6 +103,28 @@ def application_success():
     
     bros.append(Bro(Fname, description, "empty.jpg", cost, True))
     return dict(bro = bros[-1])
+
+#return_product page
+@route('/return_product.html')
+@view('return_product.html')
+def return_product():
+    pass
+
+#return_success page
+@route('/return_success', method = "POST")
+@view('return_success')
+def return_success():
+    Fname = request.forms.get("first_name")
+    Lname = request.forms.get("last_name")
+    
+    found_purchase = None
+    for bro in bros:
+        if bro.stock == False: 
+            if bro.booked_details[0] == Fname and bro.booked_details[1] == Lname:
+                found_bro = bro
+                break
+    found_bro.stock = True
+    return dict(bro = found_bro)
 
 ##Static files###
 #Images
